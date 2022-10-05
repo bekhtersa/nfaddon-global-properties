@@ -34,11 +34,11 @@ PlElement.prototype.connectedCallback = function(){
 const dcB = PlElement.prototype.disconnectedCallback;
 PlElement.prototype.disconnectedCallback = function(){
 	dcB.call(this);
-	Object.keys(element._dp).forEach( p => {
-		if (element._dp[p].global) {
+	Object.keys(this._dp).forEach( p => {
+		if (this._dp[p].global) {
 			if(GlobalProps.has(p)){
 				const Prop = GlobalProps.get(p);
-				element.removeEventListener(`${p}-changed`, _handlerProps);
+				this.removeEventListener(`${p}-changed`, _handlerProps);
 				Prop.elements.splice(Prop.elements.indexOf(element),1);
 			}
 		}

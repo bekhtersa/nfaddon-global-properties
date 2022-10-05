@@ -39,7 +39,7 @@ PlElement.prototype.disconnectedCallback = function(){
 			if(GlobalProps.has(p)){
 				const Prop = GlobalProps.get(p);
 				this.removeEventListener(`${p}-changed`, _handlerProps);
-				Prop.elements.splice(Prop.elements.indexOf(element),1);
+				Prop.elements.splice(Prop.elements.indexOf(this),1);
 			}
 		}
 	});

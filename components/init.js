@@ -27,7 +27,7 @@ PlElement.prototype.connectedCallback = function(){
 			const Prop = GlobalProps.get(p);
 			Prop.elements.push(this);
 			this.addEventListener(`${p}-changed`, _handlerProps);
-			this.notifyChange({ action: 'upd', path: p, value: this._dp[p].value ?? Prop.value });
+			this.notifyChange({ action: 'upd', path: p, value: this._dp[p].value !== this._props[p] ? this._props[p] : this._dp[p].value ?? Prop.value });
 		}
 	});
 }

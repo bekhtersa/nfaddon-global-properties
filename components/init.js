@@ -1,19 +1,31 @@
 import { PlElement } from "polylib";
+import { normalizePath } from "polylib/common";
 
 const GlobalProps = new Map();
 const _handlerProps = (e) => {
 	const info = e.detail;
-
-	const Prop = GlobalProps.get(info.path);
-
-	if (Prop.value === info.value) {
-		if(Prop.value !== e.target._props[info.path])
-			e.target.set(info.path, info.value);
+	const path = normalizePath(info.path);
+	const Prop = GlobalProps.get(path.at(0));
+	
+	if(!Prop) {
+		console.error(`global prop not found ${path.at(0)}`);
 		return;
 	}
+
 	Prop.value = info.value;
+
 	Prop?.elements.forEach((f)=>{
-		f.set(info.path, info.value);
+		if( info.action === 'upd' ){
+			if( info.value === f.get(info.path) ){
+				f.notifyChange(info);
+			}else{
+				f.set(info.path, info.value);
+			}
+		} else if( info.action === 'splice' && info.deletedCount === undefined ) {
+			f.notifyChange(info);
+		} else if( info.action === 'splice' && info.deletedCount >=0 ){
+			f.notifyChange(info);
+		}	
 	});
 }
 const ccB = PlElement.prototype.connectedCallback;

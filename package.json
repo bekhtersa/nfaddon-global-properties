@@ -1,5 +1,5 @@
 {
-	"name": "@nfaddon/global-properties",
+	"name": "@nfjs/global-properties-addon",
 	"version": "1.0.0",
 	"description": "Global properties for NF-Framework",
 	"license": "MIT",
